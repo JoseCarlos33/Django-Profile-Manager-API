@@ -54,7 +54,7 @@ class ResearchedCities(models.Model):
     city_name = models.CharField(max_length=200)
     latitude = models.CharField(max_length=200)
     longitude = models.CharField(max_length=200)
-    date_receita = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.city_name

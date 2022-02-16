@@ -1,4 +1,6 @@
 
+from pickle import FALSE
+from unicodedata import name
 from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import status, generics, viewsets
@@ -6,13 +8,13 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts import models, serializers
+from accounts import serializers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 
-from accounts.models import UserProfile
-from accounts.serializers import ProfileSerializer
+from accounts.models import UserProfile, ResearchedCities
+from accounts.serializers import ProfileSerializer, SearchSerializer
 
 class BaseView(APIView):
     authentication_classes = [
@@ -26,7 +28,7 @@ class Signup(APIView):
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
-        print(serializer)
+   
         if serializer.is_valid():
             name = serializer.data['name']
             current_city = serializer.data['current_city']
@@ -99,8 +101,35 @@ class GetOwnProfile(APIView):
         token = request.META['HTTP_AUTHORIZATION'].split()
         email = Token.objects.get(key=token[1]).user
         user = UserProfile.objects.filter(email=email)
-        serializer = ProfileSerializer(user, many=True)
+        serializer = ProfileSerializer(user, many=FALSE)
         return Response(serializer.data)
 
     
+class SearchCities(APIView):
     
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    queryset = ResearchedCities.objects.all()
+    serializer_class = SearchSerializer
+
+    def post(self, request, format=None):
+        token = request.META['HTTP_AUTHORIZATION'].split()
+        email = Token.objects.get(key=token[1]).user
+        user = UserProfile.objects.filter(email=email)
+        user_serialized = ProfileSerializer(user, many=FALSE)
+       
+        serializer = self.serializer_class(data=
+            {
+                'user': user_serialized.data[0]['id'], 
+                'city_name': request.data['city_name'],
+                'latitude': request.data['latitude'],
+                'longitude': request.data['longitude'],
+            }
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
