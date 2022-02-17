@@ -1,20 +1,14 @@
-
-from pickle import FALSE
-from unicodedata import name
+from pickle import FALSE, TRUE
 from django.contrib.auth import authenticate, get_user_model
-
-from rest_framework import status, generics, viewsets
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts import serializers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
-
 from accounts.models import UserProfile, ResearchedCities
-from accounts.serializers import ProfileSerializer, SearchSerializer
+from accounts.serializers import ProfileSerializer, SearchSerializer, SignupSerializer, LoginSerializer
 
 class BaseView(APIView):
     authentication_classes = [
@@ -24,7 +18,7 @@ class BaseView(APIView):
 
 class Signup(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = serializers.SignupSerializer
+    serializer_class = SignupSerializer
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
@@ -60,7 +54,7 @@ class Signup(APIView):
 
 class Login(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = serializers.LoginSerializer
+    serializer_class = LoginSerializer
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
@@ -93,9 +87,7 @@ class Logout(BaseView):
         content = {'success': 'User logged out.'}
         return Response(content, status=status.HTTP_200_OK)
  
-class GetOwnProfile(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+class GetOwnProfile(BaseView):
 
     def get(self, request):
         token = request.META['HTTP_AUTHORIZATION'].split()
@@ -105,10 +97,7 @@ class GetOwnProfile(APIView):
         return Response(serializer.data)
 
     
-class SearchCities(APIView):
-    
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+class SearchCities(BaseView):
 
     queryset = ResearchedCities.objects.all()
     serializer_class = SearchSerializer
@@ -133,3 +122,16 @@ class SearchCities(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_user_cities(request, format=None):
+    token = request.META['HTTP_AUTHORIZATION'].split()
+    email = Token.objects.get(key=token[1]).user
+    user = UserProfile.objects.filter(email=email)
+    user_serialized = ProfileSerializer(user, many=FALSE)
+    index_for_filter = user_serialized.data[0]['id']
+
+    current_user_cities = ResearchedCities.objects.filter(user=index_for_filter)
+    serializer = SearchSerializer(current_user_cities, many=TRUE)
+    
+    return Response(serializer.data, status=status.HTTP_200_OK)

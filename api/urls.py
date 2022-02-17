@@ -9,5 +9,6 @@ urlpatterns = [
     path('login/', views.Login.as_view()),
     path('logout/', views.Logout.as_view()),
     path('profile/', views.GetOwnProfile.as_view()),
-    path('search/', views.SearchCities.as_view())
+    path('search/', views.SearchCities.as_view()),
+    path('user/cities/', views.get_user_cities)
 ]

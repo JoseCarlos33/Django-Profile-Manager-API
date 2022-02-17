@@ -1,7 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from . import models
-from django.contrib import admin
 
 class User(admin.ModelAdmin):
     list_display = ('id','name', 'email', 'current_city')
