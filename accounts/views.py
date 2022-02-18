@@ -94,7 +94,7 @@ class GetOwnProfile(BaseView):
         email = Token.objects.get(key=token[1]).user
         user = UserProfile.objects.filter(email=email)
         serializer = ProfileSerializer(user, many=FALSE)
-        return Response(serializer.data)
+        return Response(serializer.data[0])
 
     
 class SearchCities(BaseView):
