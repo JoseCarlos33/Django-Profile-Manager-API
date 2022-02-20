@@ -110,11 +110,16 @@ class Logout(BaseView):
 class GetOwnProfile(BaseView):
 
     def get(self, request):
-        token = request.META['HTTP_AUTHORIZATION'].split()
-        email = Token.objects.get(key=token[1]).user
-        user = UserProfile.objects.filter(email=email)
-        serializer = ProfileSerializer(user, many=FALSE)
-        return Response(serializer.data[0])
+        if request.META['HTTP_AUTHORIZATION']:
+            token = request.META['HTTP_AUTHORIZATION'].split()
+            email = Token.objects.get(key=token[1]).user
+            user = UserProfile.objects.filter(email=email)
+            serializer = ProfileSerializer(user, many=FALSE)
+            return Response(serializer.data[0])
+        else:
+            content = {'detail':
+                        'Forneça o token de autenticação no header da requisição para acessar as informações do seu perfil'}
+            return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
     
 class SearchCities(BaseView):
@@ -145,13 +150,20 @@ class SearchCities(BaseView):
 
 @api_view(['GET'])
 def get_user_cities(request, format=None):
-    token = request.META['HTTP_AUTHORIZATION'].split()
-    email = Token.objects.get(key=token[1]).user
-    user = UserProfile.objects.filter(email=email)
-    user_serialized = ProfileSerializer(user, many=FALSE)
-    index_for_filter = user_serialized.data[0]['id']
-
-    current_user_cities = ResearchedCities.objects.filter(user=index_for_filter)
-    serializer = SearchSerializer(current_user_cities, many=TRUE)
     
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.META['HTTP_AUTHORIZATION']:
+        token = request.META['HTTP_AUTHORIZATION'].split()
+        email = Token.objects.get(key=token[1]).user
+        user = UserProfile.objects.filter(email=email)
+        user_serialized = ProfileSerializer(user, many=FALSE)
+        index_for_filter = user_serialized.data[0]['id']
+
+        current_user_cities = ResearchedCities.objects.filter(user=index_for_filter)
+        serializer = SearchSerializer(current_user_cities, many=TRUE)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        
+        content = {'detail':
+                    'Forneça o token de autenticação no header da requisição para acessar as informações do seu perfil'}
+        return Response(content)
