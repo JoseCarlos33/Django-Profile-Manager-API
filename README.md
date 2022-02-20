@@ -65,8 +65,8 @@
 
     Obs.: Esse token será necessário passar no header das requisições dos endpoints associados 
     ao usuário logado!
-
-  
+```
+```
   Cadastro:
 
     Requisição POST:
@@ -83,13 +83,27 @@
         "email": "usuarioteste1@gmail.com",
         "current_city": "New York"
       }
-
-
+```
+```
   Listar Perfil do Usuário Logado:
 
     Requisição GET e resposta (utilizando o postman):
 ```
-<img src="./assets/request_register_search_user.png" />
+<img src="./assets/request_profile_user.png" />
+
+```
+  Registrar Pesquisas do Usuário Logado:
+
+    Requisição POST e resposta (utilizando o postman):
+```
+<img src="./assets/request_post_search_user.png"/>
+
+```
+  Listar Pesquisas do Usuário Logado:
+
+    Requisição GET e resposta (utilizando o postman):
+```
+<img src="./assets/request_get_search_user.png"/>
 
 ### Autor
 
