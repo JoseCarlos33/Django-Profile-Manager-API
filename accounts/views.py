@@ -1,6 +1,6 @@
 from pickle import FALSE, TRUE
 from django.contrib.auth import authenticate, get_user_model
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -9,6 +9,26 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view
 from accounts.models import UserProfile, ResearchedCities
 from accounts.serializers import ProfileSerializer, SearchSerializer, SignupSerializer, LoginSerializer
+
+class Weather_Forecast_API(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, format=None):
+        return Response(
+            [
+                """Descrição : Essa API tem como intuito o registro de usuários e de pesquisas feitas por eles. Nessas pesquisas o foco foi o registro de cidades""",
+                "e suas respectivas latitudes e longitudes, para serem usadas no projeto https://github.com/JoseCarlos33/weather-forecast-app-react-native",
+                {
+                    "Endpoints": [
+                        {"Login": "https://drf-weather-forecast-app.herokuapp.com/login/"},
+                        {"Cadastro": "https://drf-weather-forecast-app.herokuapp.com/register/"},
+                        {"Registrar Pesquisas do Usuário Logado": "https://drf-weather-forecast-app.herokuapp.com/search/"},
+                        {"Listar Pesquisas do Usuário Logado": "https://drf-weather-forecast-app.herokuapp.com/user/cities/"},
+                        {"Listar Perfil do Usuário Logado": "https://drf-weather-forecast-app.herokuapp.com/profile/"},
+                    ]
+                }
+            ]
+        )
 
 class BaseView(APIView):
     authentication_classes = [
