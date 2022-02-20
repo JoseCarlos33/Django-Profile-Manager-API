@@ -90,6 +90,7 @@
     Requisição GET e resposta (utilizando o postman):
 ```
 <img src="./assets/request_register_search_user.png" />
-## Autor
+
+### Autor
 
 **José Carlos Noronha**
