@@ -29,22 +29,22 @@
   Cadastro: 
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/register/
     - Rodando Localmente: http://127.0.0.1:8000/register/
-    - Métodos HTTP: POST
+    - Método HTTP: POST
 
   Registrar Pesquisas do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/search/
     - Rodando Localmente: http://127.0.0.1:8000/search/
-    - Métodos HTTP: POST
+    - Método HTTP: POST
 
   Listar Pesquisas do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/user/cities/
     - Rodando Localmente: http://127.0.0.1:8000/user/cities/
-    - Métodos HTTP: GET
+    - Método HTTP: GET
 
   Listar Perfil do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/profile/
     - Rodando Localmente: http://127.0.0.1:8000/profile/
-    - Métodos HTTP: GET
+    - Método HTTP: GET
 ```
 
 ### Requisições e respostas
