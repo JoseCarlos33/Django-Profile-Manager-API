@@ -60,10 +60,11 @@
 
     Resposta da Requisição:
       {
-        "token": "3arrtt95c888889de125bae1091872aea2454522ddfaa1455" # <- token gerado para o usuário 
+        "token": "3arrtt95c888889de125bae1091872aea2454522ddfaa1455" # <- token do usuário 
       }
 
-    Obs.: Esse token será necessário passar no header das requisições dos endpoints associados ao usuário logado!
+    Obs.: Esse token será necessário passar no header das requisições dos endpoints associados 
+    ao usuário logado!
 
   
   Cadastro:
@@ -84,10 +85,9 @@
       }
 
 
-  Registrar Pesquisas do Usuário Logado:
+  Listar Perfil do Usuário Logado:
 
-    Requisição POST e resposta (utilizando o postman):
-    
+    Requisição GET e resposta (utilizando o postman):
 ```
 <img src="./assets/request_register_search_user.png" />
 ## Autor
