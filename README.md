@@ -23,27 +23,27 @@
 ```
   Login : 
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/login/
-    - Rodando Localmente: http://127.0.0.1:8000/login/
+    - Rodando Localmente: http://localhost:8000/login/
     - Método HTTP: POST
 
   Cadastro: 
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/register/
-    - Rodando Localmente: http://127.0.0.1:8000/register/
+    - Rodando Localmente: http://localhost:8000/register/
     - Método HTTP: POST
 
   Registrar Pesquisas do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/search/
-    - Rodando Localmente: http://127.0.0.1:8000/search/
+    - Rodando Localmente: http://localhost:8000/search/
     - Método HTTP: POST
 
   Listar Pesquisas do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/user/cities/
-    - Rodando Localmente: http://127.0.0.1:8000/user/cities/
+    - Rodando Localmente: http://localhost:8000/user/cities/
     - Método HTTP: GET
 
   Listar Perfil do Usuário Logado:
     - Link do deploy: https://drf-weather-forecast-app.herokuapp.com/profile/
-    - Rodando Localmente: http://127.0.0.1:8000/profile/
+    - Rodando Localmente: http://localhost:8000/profile/
     - Método HTTP: GET
 ```
 
