@@ -136,6 +136,7 @@ class SearchCities(BaseView):
         serializer = self.serializer_class(data=
             {
                 'user': user_serialized.data[0]['id'], 
+                'country': request.data['country'],
                 'city_name': request.data['city_name'],
                 'latitude': request.data['latitude'],
                 'longitude': request.data['longitude'],
@@ -163,7 +164,6 @@ def get_user_cities(request, format=None):
         
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-        
         content = {'detail':
                     'Forneça o token de autenticação no header da requisição para acessar as informações do seu perfil'}
         return Response(content)

@@ -52,6 +52,7 @@ class ResearchedCities(models.Model):
     
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     city_name = models.CharField(max_length=200)
+    country = models.CharField(max_length=200)
     latitude = models.CharField(max_length=200)
     longitude = models.CharField(max_length=200)
     date = models.DateTimeField(default=datetime.now, blank=True)
